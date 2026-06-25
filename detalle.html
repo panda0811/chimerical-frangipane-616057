@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Perfume | LURE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lure: {
+                            black: '#0a0a0a',
+                            bg: '#fbfaf6', 
+                            border: '#e4ddcc', 
+                            text: '#333333',
+                            gold: '#b0965e', 
+                            red: '#8c2d2d'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #fbfaf6; color: #333333; font-family: 'Montserrat', sans-serif; }
+        .font-serif-custom { font-family: 'Cormorant Garamond', serif; }
+        .text-gold { color: #b0965e; }
+    </style>
+</head>
+<body class="antialiased pb-20">
+
+    <header class="w-full bg-lure-black text-white py-6 px-8 flex justify-between items-center border-b border-white/10 sticky top-0 z-50">
+        <a href="index.html" class="font-serif-custom text-2xl tracking-[0.2em] font-light uppercase">LURE<span class="text-lure-gold">.</span></a>
+        
+        <nav class="hidden md:flex space-x-10 text-xs tracking-widest uppercase font-light">
+            <a href="catalogo_real.html" class="hover:text-lure-gold transition-colors">Catálogo</a>
+            <a href="index.html#filosofia" class="hover:text-lure-gold transition-colors">Filosofía</a>
+            <a href="index.html#reseñas" class="hover:text-lure-gold transition-colors">Clientes</a>
+        </nav>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 mt-10">
+        <a href="catalogo_real.html" class="inline-flex items-center text-xs tracking-widest uppercase text-gray-500 hover:text-black transition-colors group">
+            <svg class="w-4 h-4 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Volver al Catálogo
+        </a>
+    </div>
+
+    <section class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-12 bg-transparent">
+        
+        <div class="swiper mySwiper w-full h-[500px] bg-white border border-lure-border rounded-lg overflow-hidden shadow-sm">
+            <div class="swiper-wrapper" id="carrusel-imagenes">
+                <div class="swiper-slide flex items-center justify-center text-gray-400 font-serif-custom text-2xl">
+                    Cargando imágenes...
+                </div>
+            </div>
+            <div class="swiper-button-next text-lure-gold"></div>
+            <div class="swiper-button-prev text-lure-gold"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <div class="flex flex-col justify-center">
+            <span id="prod-marca" class="text-xs tracking-widest text-lure-gold uppercase mb-2 font-semibold">Cargando...</span>
+            <h1 id="prod-nombre" class="text-4xl md:text-5xl font-serif-custom mb-4 font-medium leading-tight">Cargando información...</h1>
+            
+            <div class="flex items-center gap-4 mb-6">
+                <span id="prod-precio" class="text-2xl font-semibold text-gray-900">S/ 0.00</span>
+                <span id="prod-precio-tachado" class="text-sm text-gray-400 line-through"></span>
+            </div>
+
+            <div class="mb-8">
+                <p class="text-xs tracking-widest uppercase font-semibold mb-3 text-gray-500">TAMAÑO</p>
+                <div class="flex gap-3">
+                    <button class="bg-lure-black text-white px-8 py-3 text-xs tracking-widest uppercase font-medium">100ml</button>
+                    </div>
+            </div>
+
+            <a id="btn-whatsapp" href="#" target="_blank" 
+               class="bg-[#25D366] hover:bg-[#128C7E] text-white text-center font-bold tracking-widest uppercase text-sm py-4 px-8 rounded-sm flex items-center justify-center gap-3 transition-colors shadow-lg hover:shadow-xl">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                Comprar por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <section class="max-w-4xl mx-auto px-4 py-16">
+        <h2 class="text-4xl md:text-5xl font-serif-custom mb-10 border-b border-lure-border pb-6">Sobre esta <span class="text-gold italic">fragancia.</span></h2>
+        
+        <div id="prod-intro" class="text-sm leading-relaxed mb-12 text-gray-700 space-y-4">
+            </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            
+            <div>
+                <h3 class="text-2xl font-serif-custom mb-6 flex items-center gap-2">👃 Pirámide olfativa</h3>
+                <div id="prod-piramide" class="text-sm text-gray-600 whitespace-pre-line border-l-2 border-lure-gold pl-4 leading-relaxed">
+                     </div>
+            </div>
+
+            <div class="space-y-10">
+                <div>
+                    <h3 class="text-xl font-serif-custom mb-3 flex items-center gap-2">🔥 Perfil olfativo REAL</h3>
+                    <p id="prod-perfil" class="text-sm font-bold text-gray-800 lowercase tracking-wide"></p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-serif-custom mb-3 flex items-center gap-2">✨ Sensaciones del aroma</h3>
+                    <ul id="prod-sensaciones" class="text-sm text-gray-600 space-y-2"></ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-serif-custom mb-3 flex items-center gap-2">🎯 Estilo</h3>
+                    <p id="prod-estilo" class="text-sm font-bold text-gray-800 lowercase tracking-wide"></p>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-serif-custom mb-3 flex items-center gap-2">⏱ Momentos ideales</h3>
+                    <ul id="prod-momentos" class="text-sm text-gray-600 space-y-2 list-disc pl-5"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    
+    <script>
+        const apiURL = "https://sheetdb.io/api/v1/cym2jp3lemwsn";
+        const formatPrice = (price) => new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN', minimumFractionDigits: 0 }).format(price);
+
+        // Transformar URL de Drive a miniatura directa
+        function formatImageUrl(url) {
+            if (!url) return '';
+            let fileId = null;
+            const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (driveMatch && driveMatch[1]) {
+                fileId = driveMatch[1];
+            }
+            const idMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (!fileId && idMatch && idMatch[1]) {
+                fileId = idMatch[1];
+            }
+            if (fileId) {
+                return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
+            }
+            return url;
+        }
+
+        // Función para poblar listas (Sensaciones, Momentos) desde el texto con saltos de línea del Excel
+        function procesarLista(texto, elementId) {
+            const ul = document.getElementById(elementId);
+            ul.innerHTML = '';
+            if (texto && texto.trim() !== '') {
+                // Separar por salto de línea
+                const items = texto.split('\n').filter(item => item.trim() !== '');
+                items.forEach(item => {
+                    ul.innerHTML += `<li>${item.trim()}</li>`;
+                });
+            } else {
+                ul.innerHTML = `<li>-</li>`;
+            }
+        }
+
+        async function cargarDetallePerfume() {
+            // Obtener el ID de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const idPerfume = urlParams.get('id');
+
+            if (!idPerfume) {
+                document.getElementById('prod-nombre').textContent = "No se especificó un producto.";
+                return;
+            }
+
+            try {
+                // Descargar datos
+                const respuesta = await fetch(apiURL);
+                const productos = await respuesta.json();
+                
+                // Buscar el perfume por ID
+                const datos = productos.find(p => String(p.id) === String(idPerfume));
+
+                if (datos) {
+                    // LLENAR TEXTOS PRINCIPALES
+                    document.getElementById('prod-nombre').textContent = datos.name || 'Sin Nombre';
+                    document.getElementById('prod-marca').textContent = datos.brand || 'Axon Perfumes';
+                    
+                    // PRECIOS Y DESCUENTOS
+                    const price = Number(datos.price) || 0;
+                    const discount = Number(datos.discount) || 0;
+                    const finalPrice = price - (price * (discount / 100));
+
+                    document.getElementById('prod-precio').textContent = formatPrice(finalPrice);
+                    if (discount > 0) {
+                        document.getElementById('prod-precio-tachado').textContent = formatPrice(price);
+                    }
+
+                    // IMÁGENES (img1, img2, img3)
+                    const carrusel = document.getElementById('carrusel-imagenes');
+                    carrusel.innerHTML = '';
+                    
+                    // Extraer imágenes y eliminar las vacías
+                    let imagenesRaw = [datos.img1, datos.img2, datos.img3].filter(img => img && img.trim() !== '');
+                    
+                    // Si no hay ninguna de las 3, usamos la imagen principal (image) como respaldo
+                    if (imagenesRaw.length === 0 && datos.image) {
+                        imagenesRaw = [datos.image];
+                    }
+
+                    // Inyectar en el carrusel convirtiendo los links
+                    if (imagenesRaw.length > 0) {
+                        imagenesRaw.forEach(img => {
+                            const urlLista = formatImageUrl(img);
+                            carrusel.innerHTML += `
+                                <div class="swiper-slide flex items-center justify-center p-8 bg-white">
+                                    <img src="${urlLista}" class="object-contain w-full h-full mix-blend-multiply" alt="${datos.name}">
+                                </div>`;
+                        });
+                    } else {
+                        carrusel.innerHTML = `<div class="swiper-slide flex items-center justify-center text-gray-400 font-serif-custom text-xl">Sin imagen disponible</div>`;
+                    }
+
+                    // INICIALIZAR CARRUSEL
+                    new Swiper(".mySwiper", {
+                        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                        pagination: { el: ".swiper-pagination", clickable: true },
+                        loop: imagenesRaw.length > 1 // Solo loop si hay más de 1 imagen
+                    });
+
+                    // WHATSAPP
+                    const numeroWsp = "51928999490";
+                    const mensajeWsp = encodeURIComponent(`Hola, estoy interesado en el perfume: ${datos.name} (${datos.brand}) a ${formatPrice(finalPrice)}.`);
+                    document.getElementById('btn-whatsapp').href = `https://wa.me/${numeroWsp}?text=${mensajeWsp}`;
+
+                    // INFO DETALLADA (Reemplazar saltos de línea por <br> para la intro)
+                    document.getElementById('prod-intro').innerHTML = (datos.intro || 'Sin introducción disponible.').replace(/\n/g, '<br><br>');
+                    
+                    document.getElementById('prod-piramide').innerText = datos.piramide || '-';
+                    document.getElementById('prod-perfil').textContent = datos.perfil || '-';
+                    document.getElementById('prod-estilo').textContent = datos.estilo || '-';
+
+                    // LISTAS
+                    procesarLista(datos.sensaciones, 'prod-sensaciones');
+                    procesarLista(datos.momentos, 'prod-momentos');
+
+                } else {
+                    document.getElementById('prod-nombre').textContent = "Perfume no encontrado";
+                    document.getElementById('prod-marca').textContent = "Error";
+                    document.getElementById('carrusel-imagenes').innerHTML = `<div class="swiper-slide flex items-center justify-center text-red-400">Error 404</div>`;
+                }
+            } catch (error) {
+                console.error("Error cargando API:", error);
+                document.getElementById('prod-nombre').textContent = "Error de conexión";
+            }
+        }
+
+        // Ejecutar al cargar la página
+        cargarDetallePerfume();
+    </script>
+</body>
+</html>
