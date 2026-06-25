@@ -6,7 +6,6 @@
     <title>Catálogo Oficial | LURE Perfumes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
     <script>
         tailwind.config = {
             theme: {
@@ -33,6 +32,13 @@
         }
         .custom-checkbox:checked::after {
             content: ''; position: absolute; top: 2px; left: 2px; width: 8px; height: 8px; background-color: #b0965e;
+        }
+        /* Clase para limitar las líneas de la descripción */
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
         }
     </style>
 </head>
@@ -152,8 +158,7 @@
                 <p class="font-serif text-2xl text-gray-400">No se encontraron fragancias con estos filtros.</p>
                 <button onclick="resetFilters()" class="mt-4 text-xs tracking-widest uppercase border border-lure-gold text-lure-gold px-6 py-2 hover:bg-lure-gold hover:text-white transition-colors">Limpiar Filtros</button>
             </div>
-            <div id="contenedor-productos">
-    </div>
+            <div id="contenedor-productos"></div>
         </section>
     </main>
 
@@ -165,7 +170,18 @@
         const grid = document.getElementById('product-grid');
         const countDisplay = document.getElementById('product-count');
         const noResultsMsg = document.getElementById('no-results');
-const formatPrice = (price) => new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN', minimumFractionDigits: 0 }).format(price);
+        const formatPrice = (price) => new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN', minimumFractionDigits: 0 }).format(price);
+        
+        // FUNCIÓN NUEVA: Transforma enlaces de Google Drive a enlaces de imagen directa
+        function formatImageUrl(url) {
+            if (!url) return '';
+            const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (driveMatch && driveMatch[1]) {
+                return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+            }
+            return url;
+        }
+
         function getFilterState() {
             return {
                 stock: document.getElementById('filter-stock').checked,
@@ -193,15 +209,8 @@ const formatPrice = (price) => new Intl.NumberFormat('es-PE', { style: 'currency
             if (state.genders.length === 0) return true;
             
             return state.genders.some(g => {
-                // Si seleccionan Hombre, mostramos los de hombre y los unisex
-                if (g === 'hombre') {
-                    return p.tags.includes('hombre') || p.tags.includes('unisex');
-                }
-                // Si seleccionan Mujer, mostramos los de mujer y los unisex
-                if (g === 'mujer') {
-                    return p.tags.includes('mujer') || p.tags.includes('unisex');
-                }
-                // Comportamiento normal por defecto
+                if (g === 'hombre') return p.tags.includes('hombre') || p.tags.includes('unisex');
+                if (g === 'mujer') return p.tags.includes('mujer') || p.tags.includes('unisex');
                 return p.tags.includes(g);
             });
         }
@@ -254,13 +263,18 @@ const formatPrice = (price) => new Intl.NumberFormat('es-PE', { style: 'currency
                         <div class="border-r border-b border-lure-border relative p-8 flex flex-col items-center group cursor-pointer hover:bg-gray-50 transition-colors duration-300">
                             ${stockBadge}
                             ${discountBadge}
-                            <div class="w-full h-64 mb-6 flex items-center justify-center overflow-hidden">
+                            <div class="w-full h-56 mb-4 flex items-center justify-center overflow-hidden">
                                 <img src="${product.image}" alt="${product.name}" class="max-h-full object-contain mix-blend-multiply transition-transform duration-500 ${imageClass}">
                             </div>
                             <p class="text-lure-gold text-[10px] tracking-[0.2em] font-semibold uppercase">${product.brand}</p>
                             <h3 class="font-serif text-xl font-medium mt-1 mb-1 text-center leading-tight">${product.name}</h3>
-                            <p class="text-xs text-gray-500 mb-3">${product.ml} ml</p>
-                            <div class="flex items-center space-x-2">
+                            <p class="text-xs text-gray-500 mb-2">${product.ml} ml</p>
+                            
+                            <p class="text-[11px] text-gray-500 mb-4 text-center line-clamp-3 leading-relaxed px-2 w-full">
+                                ${product.descri ? product.descri : 'Sin descripción disponible'}
+                            </p>
+
+                            <div class="flex items-center space-x-2 mt-auto">
                                 ${product.discount > 0 ? `<span class="text-xs text-gray-400 line-through">${formatPrice(product.price)}</span>` : ''}
                                 <span class="text-sm text-gray-800 font-semibold">${formatPrice(product.price - (product.price * (product.discount / 100)))}</span>
                             </div>
@@ -289,45 +303,38 @@ const formatPrice = (price) => new Intl.NumberFormat('es-PE', { style: 'currency
 
         document.querySelectorAll('.filter-trigger').forEach(input => input.addEventListener('change', applyFilters));
         document.querySelectorAll('.filter-trigger-input').forEach(input => input.addEventListener('input', applyFilters));
-
-        // Inicialización automática al cargar
-        applyFilters();
     </script>
    <script>
     const apiURL = "https://sheetdb.io/api/v1/cym2jp3lemwsn";
-    let productsDB = []; // Variable global donde guardaremos los datos de SheetDB
+    let productsDB = [];
 
     async function iniciarCatalogo() {
         try {
             const respuesta = await fetch(apiURL);
             productsDB = await respuesta.json();
             
-            // Asegurarnos de que los valores numéricos sean tratados como números
+            // Tratamiento de datos antes de pintar
             productsDB = productsDB.map(p => ({
                 ...p,
                 price: Number(p.price) || 0,
                 stock: Number(p.stock) || 0,
                 discount: Number(p.discount) || 0,
-                // Si 'tags' viene como string (ej: "arabe,nicho"), conviértelo a array
-                tags: typeof p.tags === 'string' ? p.tags.split(',') : (p.tags || [])
+                tags: typeof p.tags === 'string' ? p.tags.split(',') : (p.tags || []),
+                // IMPORTANTE: Aquí procesamos la imagen para que Drive y URLs normales funcionen
+                image: formatImageUrl(p.image),
+                // IMPORTANTE: Aseguramos que descri exista (aunque esté vacía)
+                descri: p.descri || ''
             }));
 
             console.log("Datos cargados correctamente:", productsDB);
             
-            // Una vez cargados los datos, aplicamos los filtros iniciales
             applyFilters();
         } catch (error) {
             console.error("Error al conectar con la base de datos:", error);
         }
     }
 
-    // --- MANTÉN AQUÍ TODAS TUS FUNCIONES (renderProducts, applyFilters, etc.) ---
-    // ... (Mantén el resto de tus funciones aquí abajo) ...
-
-    // Inicializar
     iniciarCatalogo();
 </script>
 </body>
 </html>
-
-```
