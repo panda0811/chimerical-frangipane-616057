@@ -70,31 +70,36 @@
         </div>
     </header>
 
-    <section class="relative h-screen w-full flex items-center justify-start bg-lure-black overflow-hidden pt-20">
-        <div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat scale-105" 
-             style="background-image: url('banner.jpg'); background-position: right center;">
-        </div>
-        <div class="absolute inset-0 bg-gradient-to-r from-lure-black via-lure-black/80 to-transparent z-10"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-lure-black via-transparent to-transparent z-10"></div>
+  <section class="relative h-screen w-full flex items-center justify-start bg-lure-black overflow-hidden pt-20">
+    <!-- VIDEO DE FONDO -->
+    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+        <source src="https://res.cloudinary.com/domk5eipf/video/upload/v1782357985/axonperfumes_lmreyu.mp4" type="video/mp4">
+        Tu navegador no soporta el formato de video.
+    </video>
 
-        <div class="relative z-20 max-w-7xl mx-auto px-6 w-full">
-            <div class="max-w-2xl">
-                <span class="text-[10px] tracking-[0.4em] uppercase font-semibold text-lure-gold block mb-4">Más que una tienda, una experiencia</span>
-                <h1 class="font-serif text-6xl md:text-8xl font-medium text-white leading-[0.9] mb-8">
-                    El arte de <br><span class="italic font-light text-lure-gold">oler diferente.</span>
-                </h1>
-                
-                <div class="flex flex-col sm:flex-row gap-6 mt-12">
-                    <a href="catalogo_real.html" class="inline-block bg-lure-gold hover:bg-lure-goldHover text-lure-black text-xs tracking-[0.2em] font-bold uppercase px-8 py-5 transition-colors duration-300 text-center">
-                        Comprar Ahora →
-                    </a>
-                    <a href="catalogo_real.html" class="inline-block border border-white/20 hover:border-lure-gold text-white text-xs tracking-[0.2em] font-medium uppercase px-8 py-5 transition-colors duration-300 text-center">
-                        Explorar Colección
-                    </a>
-                </div>
+    <!-- CAPAS DE GRADIENTE PARA CONTRASTE -->
+    <div class="absolute inset-0 bg-gradient-to-r from-lure-black via-lure-black/30 to-transparent z-10"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-lure-black via-transparent to-transparent z-10"></div>
+
+    <!-- CONTENIDO -->
+    <div class="relative z-20 max-w-7xl mx-auto px-6 w-full">
+        <div class="max-w-2xl">
+            <span class="text-[10px] tracking-[0.4em] uppercase font-semibold text-lure-gold block mb-4">Más que una tienda, una experiencia</span>
+            <h1 class="font-serif text-6xl md:text-8xl font-medium text-white leading-[0.9] mb-8">
+                El arte de <br><span class="italic font-light text-lure-gold">oler diferente.</span>
+            </h1>
+            
+            <div class="flex flex-col sm:flex-row gap-6 mt-12">
+                <a href="catalogo_real.html" class="inline-block bg-lure-gold hover:bg-lure-goldHover text-lure-black text-xs tracking-[0.2em] font-bold uppercase px-8 py-5 transition-colors duration-300 text-center">
+                    Comprar Ahora →
+                </a>
+                <a href="catalogo_real.html" class="inline-block border border-white/20 hover:border-lure-gold text-white text-xs tracking-[0.2em] font-medium uppercase px-8 py-5 transition-colors duration-300 text-center">
+                    Explorar Colección
+                </a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <div class="bg-lure-black py-6 border-b border-white/10 flex overflow-hidden whitespace-nowrap relative select-none">
         <div class="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-lure-black to-transparent z-10"></div>
@@ -170,20 +175,24 @@
 
         <div class="flex overflow-x-auto gap-6 px-6 pb-8 snap-x snap-mandatory no-scrollbar">
             
+            <!-- Reseña 1 -->
             <div class="shrink-0 w-[280px] md:w-[320px] snap-center bg-white rounded-3xl p-2 shadow-2xl relative">
-                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=400&q=80" alt="Reseña cliente WhatsApp 1" class="w-full h-[500px] object-cover rounded-2xl">
+                <img src="https://lh3.googleusercontent.com/d/1ijGD5HO1eeMb4bRM_6KMqzNMZGTz1L_9" alt="Reseña cliente WhatsApp 1" class="w-full h-[500px] object-cover rounded-2xl">
             </div>
             
+            <!-- Reseña 2 -->
             <div class="shrink-0 w-[280px] md:w-[320px] snap-center bg-white rounded-3xl p-2 shadow-2xl relative">
-                <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=400&q=80" alt="Reseña cliente WhatsApp 2" class="w-full h-[500px] object-cover rounded-2xl">
+                <img src="https://lh3.googleusercontent.com/d/1ijGD5HO1eeMb4bRM_6KMqzNMZGTz1L_9" alt="Reseña cliente WhatsApp 2" class="w-full h-[500px] object-cover rounded-2xl">
             </div>
 
+            <!-- Reseña 3 (Ejemplo con el archivo mencionado: image_073aa0.jpg) -->
             <div class="shrink-0 w-[280px] md:w-[320px] snap-center bg-white rounded-3xl p-2 shadow-2xl relative">
-                <img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055ce?auto=format&fit=crop&w=400&q=80" alt="Reseña cliente WhatsApp 3" class="w-full h-[500px] object-cover rounded-2xl">
+                <img src="https://lh3.googleusercontent.com/d/1ijGD5HO1eeMb4bRM_6KMqzNMZGTz1L_9" alt="Reseña cliente WhatsApp 3" class="w-full h-[500px] object-cover rounded-2xl">
             </div>
 
+            <!-- Reseña 4 -->
             <div class="shrink-0 w-[280px] md:w-[320px] snap-center bg-white rounded-3xl p-2 shadow-2xl relative">
-                <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=400&q=80" alt="Reseña cliente WhatsApp 4" class="w-full h-[500px] object-cover rounded-2xl">
+                <img src="https://lh3.googleusercontent.com/d/1ijGD5HO1eeMb4bRM_6KMqzNMZGTz1L_9" alt="Reseña cliente WhatsApp 4" class="w-full h-[500px] object-cover rounded-2xl">
             </div>
 
             <div class="shrink-0 w-6"></div>
