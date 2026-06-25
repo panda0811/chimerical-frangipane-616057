@@ -40,18 +40,11 @@
             overflow: hidden;
         }
         
-        /* Estilos para las tarjetas seleccionadas */
-        .selected-card {
-            border-color: #b0965e !important;
-            border-width: 2px !important;
-            background-color: #fcfaf5 !important;
-            box-shadow: 0 4px 6px -1px rgba(176, 150, 94, 0.1), 0 2px 4px -1px rgba(176, 150, 94, 0.06);
-        }
-        .selected-icon {
-            display: none;
-        }
-        .selected-card .selected-icon {
-            display: flex;
+        /* Efecto hover suave para las tarjetas en modo enlace */
+        .card-link:hover {
+            box-shadow: 0 10px 15px -3px rgba(176, 150, 94, 0.1), 0 4px 6px -2px rgba(176, 150, 94, 0.05);
+            border-color: #b0965e;
+            z-index: 10;
         }
     </style>
 </head>
@@ -63,7 +56,7 @@
     </nav>
 
     <header class="w-full border-b border-lure-border px-8 py-8 flex justify-between items-end bg-lure-bg">
-        <h1 class="font-serif text-5xl font-medium tracking-wide">Catalógo</h1>
+        <h1 class="font-serif text-5xl font-medium tracking-wide">Catálogo</h1>
     </header>
 
     <main class="flex w-full flex-1 bg-lure-bg">
@@ -162,7 +155,7 @@
                 <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500">
                     <span id="product-count" class="text-black font-semibold">0</span> Artículos
                 </span>
-                <span class="text-[10px] text-lure-gold italic tracking-widest">Toca un producto para agregarlo al pedido</span>
+                <span class="text-[10px] text-lure-gold italic tracking-widest">Toca un producto para ver los detalles</span>
             </div>
 
             <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -173,15 +166,11 @@
                 <p class="font-serif text-2xl text-gray-400">No se encontraron fragancias con estos filtros.</p>
                 <button onclick="resetFilters()" class="mt-4 text-xs tracking-widest uppercase border border-lure-gold text-lure-gold px-6 py-2 hover:bg-lure-gold hover:text-white transition-colors">Limpiar Filtros</button>
             </div>
-            <div id="contenedor-productos"></div>
         </section>
     </main>
 
-    <!-- Botón Flotante de WhatsApp Mejorado -->
-    <div onclick="enviarPedido()" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center w-[60px] h-[60px] cursor-pointer">
-        <!-- Burbuja roja para contador de carrito -->
-        <span id="wa-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-[11px] font-bold w-6 h-6 flex items-center justify-center rounded-full border-2 border-white hidden">0</span>
-        
+    <!-- Botón Flotante de WhatsApp para Contacto General -->
+    <div onclick="enviarContacto()" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-3 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center w-[60px] h-[60px] cursor-pointer">
         <svg fill="currentColor" viewBox="0 0 24 24" class="w-8 h-8"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </div>
 
@@ -190,9 +179,6 @@
         const countDisplay = document.getElementById('product-count');
         const noResultsMsg = document.getElementById('no-results');
         const formatPrice = (price) => new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN', minimumFractionDigits: 0 }).format(price);
-        
-        // ARRAY PARA GUARDAR LOS PRODUCTOS SELECCIONADOS
-        let selectedProducts = [];
 
         function formatImageUrl(url) {
             if (!url) return '';
@@ -265,72 +251,10 @@
             document.getElementById('count-unisex').innerText = baseForCategory.filter(p => p.tags.includes('unisex')).length;
         }
 
-        // FUNCION PARA SELECCIONAR / DESELECCIONAR PRODUCTOS
-        function toggleSelection(productId) {
-            const product = productsDB.find(p => p.id == productId);
-            if (!product) return;
-
-            // Evitar seleccionar productos sin stock
-            if (product.stock <= 0) {
-                alert("Este producto se encuentra actualmente agotado.");
-                return;
-            }
-
-            const index = selectedProducts.findIndex(p => p.id == productId);
-            const cardEl = document.getElementById(`product-card-${productId}`);
-
-            if (index > -1) {
-                // Si ya está seleccionado, lo quitamos
-                selectedProducts.splice(index, 1);
-                if (cardEl) {
-                    cardEl.classList.remove('selected-card');
-                    cardEl.classList.add('border-lure-border', 'hover:bg-gray-50');
-                }
-            } else {
-                // Si no está, lo agregamos
-                selectedProducts.push(product);
-                if (cardEl) {
-                    cardEl.classList.add('selected-card');
-                    cardEl.classList.remove('border-lure-border', 'hover:bg-gray-50');
-                }
-            }
-            updateWhatsAppBadge();
-        }
-
-        // FUNCION PARA ACTUALIZAR EL GLOBO ROJO DE WHATSAPP
-        function updateWhatsAppBadge() {
-            const badge = document.getElementById('wa-count');
-            if (selectedProducts.length > 0) {
-                badge.innerText = selectedProducts.length;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-        }
-
-        // FUNCION PARA ENVIAR EL PEDIDO A WHATSAPP
-        function enviarPedido() {
+        // FUNCION PARA ENVIAR MENSAJE GENERAL A WHATSAPP
+        function enviarContacto() {
             const numero = "51928999490";
-            let mensaje = "";
-
-            if (selectedProducts.length === 0) {
-                // Mensaje genérico si no hay nada seleccionado
-                mensaje = "¡Hola! Vengo del catálogo y quisiera más información sobre sus perfumes.";
-            } else {
-                // Armar lista de compras
-                mensaje = "¡Hola! Me gustaría realizar el pedido de los siguientes productos:\n\n";
-                let total = 0;
-                
-                selectedProducts.forEach((p, index) => {
-                    const finalPrice = p.price - (p.price * (p.discount / 100));
-                    total += finalPrice;
-                    mensaje += `*${index + 1}. ${p.name}* (${p.brand}) - ${p.ml}ml -> ${formatPrice(finalPrice)}\n`;
-                });
-                
-                mensaje += `\n*Total estimado: ${formatPrice(total)}*`;
-            }
-
-            // Codificar y redirigir
+            const mensaje = "¡Hola! Estuve viendo su catálogo y quisiera más información sobre sus perfumes.";
             const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
         }
@@ -346,9 +270,6 @@
                 
                 productsToRender.forEach(product => {
                     const hasStock = product.stock > 0;
-                    // Verificamos si este producto ya estaba en la canasta
-                    const isSelected = selectedProducts.some(sel => sel.id == product.id);
-                    const borderClass = isSelected ? 'selected-card' : 'border-lure-border hover:bg-gray-50';
                     
                     const stockBadge = !hasStock 
                         ? `<div class="absolute top-4 left-4 bg-gray-500 text-white text-[9px] font-bold tracking-[0.2em] uppercase px-2 py-1 z-10">Agotado</div>`
@@ -360,20 +281,17 @@
 
                     const imageClass = !hasStock ? 'opacity-40 grayscale' : 'group-hover:scale-105';
 
-                    // Agregamos el ID de la tarjeta y el evento onclick
+                    // Convertimos el div principal en una etiqueta <a> que redirige a detalle.html?id=...
                     const cardHTML = `
-                        <div id="product-card-${product.id}" onclick="toggleSelection('${product.id}')" class="border-r border-b relative p-8 flex flex-col items-center group cursor-pointer transition-all duration-300 ${borderClass}">
+                        <a href="detalle.html?id=${product.id}" id="product-card-${product.id}" class="card-link border-r border-b border-lure-border hover:bg-gray-50 block relative p-8 flex flex-col items-center group cursor-pointer transition-all duration-300">
                             
-                            <!-- Icono flotante de seleccionado (Check) -->
-                            <div class="selected-icon absolute top-12 right-4 bg-lure-gold text-white rounded-full w-6 h-6 items-center justify-center z-20 shadow-md">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-
                             ${stockBadge}
                             ${discountBadge}
+                            
                             <div class="w-full h-56 mb-4 flex items-center justify-center overflow-hidden">
                                 <img src="${product.image}" alt="${product.name}" class="max-h-full object-contain mix-blend-multiply transition-transform duration-500 ${imageClass}">
                             </div>
+                            
                             <p class="text-lure-gold text-[10px] tracking-[0.2em] font-semibold uppercase">${product.brand}</p>
                             <h3 class="font-serif text-xl font-medium mt-1 mb-1 text-center leading-tight">${product.name}</h3>
                             <p class="text-xs text-gray-500 mb-2">${product.ml} ml</p>
@@ -386,7 +304,7 @@
                                 ${product.discount > 0 ? `<span class="text-xs text-gray-400 line-through">${formatPrice(product.price)}</span>` : ''}
                                 <span class="text-sm text-gray-800 font-semibold">${formatPrice(product.price - (product.price * (product.discount / 100)))}</span>
                             </div>
-                        </div>
+                        </a>
                     `;
                     grid.insertAdjacentHTML('beforeend', cardHTML);
                 });
@@ -412,7 +330,7 @@
         document.querySelectorAll('.filter-trigger').forEach(input => input.addEventListener('change', applyFilters));
         document.querySelectorAll('.filter-trigger-input').forEach(input => input.addEventListener('input', applyFilters));
     </script>
-   <script>
+    <script>
     const apiURL = "https://sheetdb.io/api/v1/cym2jp3lemwsn";
     let productsDB = [];
 
@@ -423,7 +341,6 @@
             
             productsDB = productsDB.map(p => ({
                 ...p,
-                // Asegurarnos de que el ID exista y sea texto para evitar problemas comparando
                 id: p.id ? String(p.id) : Math.random().toString(36).substr(2, 9),
                 price: Number(p.price) || 0,
                 stock: Number(p.stock) || 0,
