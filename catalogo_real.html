@@ -173,12 +173,31 @@
         const formatPrice = (price) => new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN', minimumFractionDigits: 0 }).format(price);
         
         // FUNCIÓN NUEVA: Transforma enlaces de Google Drive a enlaces de imagen directa
+    // FUNCIÓN MEJORADA: Transforma enlaces de Google Drive a enlaces de imagen directa
         function formatImageUrl(url) {
             if (!url) return '';
+            
+            let fileId = null;
+            
+            // Caso 1: Enlaces del tipo /file/d/ID/view
             const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
             if (driveMatch && driveMatch[1]) {
-                return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
+                fileId = driveMatch[1];
             }
+            
+            // Caso 2: Enlaces del tipo ?id=ID
+            const idMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (!fileId && idMatch && idMatch[1]) {
+                fileId = idMatch[1];
+            }
+
+            // Si encontramos un ID de Drive, usamos el endpoint 'thumbnail' que es el más estable actualmente
+            if (fileId) {
+                // sz=w800 define la resolución máxima (800px). Puedes cambiarlo a w1000 si necesitas más calidad
+                return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
+            }
+            
+            // Si no es de Drive (o es una URL externa como Bharara King), la devuelve normal
             return url;
         }
 
